@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md Romyull Islam - Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Leaflet CSS for the map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active {
+            color: #667eea;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 5px solid #667eea;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .header h2 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .header h3 {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #555;
+            /* Shift map marker slightly to the right */
+            justify-content: center;
+            padding-right: 20px;
+        }
+
+        .contact-item i {
+            color: #667eea;
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            background: #667eea;
+            color: white;
+            padding: 0.8rem;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .research-item {
+            background: #f8f9ff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .research-item h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .publications-section {
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+            background: #f8f9ff;
+        }
+
+        .upload-form {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .experience-item, .skill-category {
+            background: #f8f9ff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .experience-item h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-meta {
+            color: #777;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .skill-list li:before {
+            content: "▸ ";
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            justify-content: center; /* Center the buttons */
+        }
+
+        .visitor-stats {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .visitor-stats h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        #visitor-count {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #visitor-map {
+            width: 100%;
+            height: 300px;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header {
+                padding: 2rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                flex-wrap: wrap;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .visitor-stats {
+                margin: 1rem 0;
+                padding: 0.8rem;
+            }
+
+            #visitor-map {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">Md Romyull Islam</div>
+            <ul>
+                <li><a href="#about" onclick="scrollToSection('about')" class="nav-link active">About</a></li>
+                <li><a href="#research" onclick="scrollToSection('research')" class="nav-link">Research</a></li>
+                <li><a href="#publications" onclick="scrollToSection('publications')" class="nav-link">Publications</a></li>
+                <li><a href="#experience" onclick="scrollToSection('experience')" class="nav-link">Experience</a></li>
+                <li><a href="#skills" onclick="scrollToSection('skills')" class="nav-link">Skills</a></li>
+                <li><a href="travel.html" class="nav-link">Travel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+
+
+        <div class="header" id="about">
+            <img src="images/profile.jpg" alt="Profile Photo" class="profile-img" id="profileImg">
+            <h1>Md Romyull Islam</h1>
+            <h2>PhD Student in Computer Science</h2>
+            <h3>Kennesaw State University, GA, USA</h3>
+            
+            <div class="about-content">
+                <p>I am a dedicated PhD student in Computer Science at Kennesaw State University, specializing in language model optimization and edge computing. With a strong academic foundation including a Master's degree from Austin Peay State University and a Bachelor's from Daffodil International University, I bring extensive research experience in machine learning and artificial intelligence.</p>
+                
+                <p>My current research focuses on optimizing large language models for edge devices, contributing to the advancement of efficient AI deployment. I have published multiple peer-reviewed papers and actively contribute to the research community through conferences and collaborative projects. My technical expertise spans across TensorFlow, PyTorch, edge computing platforms, and advanced ML techniques, making me well-suited for both academic research and industry innovation.</p>
+                
+                <!--<p>I am actively seeking opportunities in both academic research and industry positions where I can apply my expertise in AI, machine learning, and edge computing to solve complex problems and drive innovation.</p>-->
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Marietta, Georgia</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>mislam22@students.kennesaw.edu</span>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://github.com/Romyull-Islam" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/romyull-islam/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://scholar.google.com/citations?user=DhGIUA8AAAAJ&hl=en" target="_blank"><i class="fas fa-graduation-cap"></i></a>
+                <a href="mailto:mislam22@students.kennesaw.edu"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+
+        <div class="content-section" id="research">
+            <h2 class="section-title">Research Interests & Ongoing Work</h2>
+            
+            <div class="research-item">
+                <h3>Language Model Optimization for Edge Devices</h3>
+                <p>My primary research focus involves developing novel techniques for optimizing large language models to run efficiently on edge devices. This includes working with quantization methods, model compression, and hardware-aware optimization strategies to enable real-time inference on resource-constrained devices like Raspberry Pi and Jetson Orin.</p>
+            </div>
+
+            <div class="research-item">
+                <h3>Edge Computing and AI</h3>
+                <p>I explore the intersection of artificial intelligence and edge computing, investigating how to deploy sophisticated AI models on devices with limited computational resources. My research contributes to making AI more accessible and practical for real-world applications where cloud connectivity may be limited or latency is critical.</p>
+            </div>
+
+            <div class="research-item">
+                <h3>Energy Efficiency in Small Language Models</h3>
+                <p>Investigating the energy consumption patterns and efficiency opportunities in small language models deployed on edge devices. This research is crucial for sustainable AI deployment and extends the operational lifetime of battery-powered edge devices.</p>
+            </div>
+
+            <div class="research-item">
+                <h3>Adaptive Sparsity Driven Quantization-Aware Low-Rank Adaptation (ASQLoRA)</h3>
+                <p>Currently developing a novel fine-tuning methodology that combines quantization techniques with Low-Rank Adaptation (LoRA) to create more efficient language models. This research aims to maintain model performance while significantly reducing computational requirements and memory footprint.</p>
+            </div>
+        </div>
+
+        <div class="content-section" id="publications">
+            <h2 class="section-title">Publications</h2>
+            
+            <div class="publications-section">
+                <div class="upload-area" id="pubUploadArea" style="display: none;">
+                    <i class="fas fa-upload" style="font-size: 2rem; color: #667eea; margin-bottom: 1rem;"></i>
+                    <h3>Add New Publication</h3>
+                    <p>Upload your research publications including conference papers, journal articles, and preprints.</p>
+                    <button class="btn" onclick="togglePublicationForm()">
+                        <i class="fas fa-plus"></i> Add Publication
+                    </button>
+                </div>
+
+                <div class="upload-form" id="publicationForm">
+                    <h3>Publication Details</h3>
+                    <form onsubmit="addPublication(event)">
+                        <div class="form-group">
+                            <label>Title:</label>
+                            <input type="text" id="pubTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Conference/Journal:</label>
+                            <input type="text" id="pubVenue" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Volume:</label>
+                            <input type="text" id="pubVolume">
+                        </div>
+                        <div class="form-group">
+                            <label>Link:</label>
+                            <input type="url" id="pubLink">
+                        </div>
+                        <div class="form-group">
+                            <label>PDF File:</label>
+                            <input type="file" id="pubPDF" accept=".pdf" required>
+                        </div>
+                        <button type="submit" class="btn">Add Publication</button>
+                        <button type="button" class="btn btn-secondary" onclick="togglePublicationForm()">Cancel</button>
+                    </form>
+                </div>
+
+                <div id="publicationsList">
+                    <!-- Publications will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="experience">
+            <h2 class="section-title">Professional Experience</h2>
+            
+            <div class="experience-item">
+                <h3>Graduate Research Assistant</h3>
+                <p class="experience-meta">Kennesaw State University | August 2023 – Present | Marietta, Georgia</p>
+                <ul>
+                    <li>Conduct research on language models and edge devices, focusing on optimizing models for edge hardware such as Raspberry Pi and Jetson Orin</li>
+                    <li>Fine-tune and optimize large language models, improving performance for real-time inference</li>
+                    <li>Collect, analyze, and interpret data from experiments to support research findings</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h3>NLP and Data Science Intern</h3>
+                <p class="experience-meta">Syntegral Systems Corporation | February 2023 – May 2023 | Remote</p>
+                <ul>
+                    <li>Scraped and processed data from PDF documents to build a robust knowledge base</li>
+                    <li>Assisted in developing a chatbot tailored for environment-friendly industries, using language models to enhance accuracy and response times</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h3>Graduate Teaching/Graduate Research Assistant</h3>
+                <p class="experience-meta">Austin Peay State University | October 2021 – May 2023 | Clarksville, Tennessee</p>
+                <ul>
+                    <li>Graded quizzes, homework, and proctored exams for machine learning and predictive analytics courses</li>
+                    <li>Assisted students in understanding machine learning concepts and statistical techniques for project work</li>
+                    <li>Applied advanced data visualization and querying techniques to analyze complex datasets</li>
+                    <li>Worked with environment and time series data, applying various machine learning algorithms to create optimal models</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h3>Machine Learning Intern</h3>
+                <p class="experience-meta">Mayalogy Digital Health Pte. Ltd | February 2021 – July 2021 | Dhaka, Bangladesh</p>
+                <ul>
+                    <li>Collaborated with the machine learning team to develop an AI-powered medical support system</li>
+                    <li>Labeled and preprocessed medical query data, achieving 86% model accuracy in automating query routing</li>
+                    <li>Applied multi-label classification techniques to ensure healthcare professionals' accurate query resolution</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section" id="skills">
+            <h2 class="section-title">Technical Skills</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frameworks & Libraries</h3>
+                    <ul class="skill-list">
+                        <li>TensorFlow</li>
+                        <li>PyTorch</li>
+                        <li>NumPy</li>
+                        <li>Pandas</li>
+                        <li>Scikit-Learn</li>
+                        <li>Matplotlib</li>
+                        <li>OpenCV</li>
+                        <li>NLTK</li>
+                        <li>Seaborn</li>
+                        <li>Keras</li>
+                        <li>PySpark</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Platforms & Cloud</h3>
+                    <ul class="skill-list">
+                        <li>Google Colab</li>
+                        <li>Amazon SageMaker</li>
+                        <li>Tableau</li>
+                        <li>Arduino</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Machine Learning & AI</h3>
+                    <ul class="skill-list">
+                        <li>Random Forest</li>
+                        <li>Decision Trees</li>
+                        <li>Gradient Descent</li>
+                        <li>Support Vector Machine</li>
+                        <li>Computer Vision</li>
+                        <li>Natural Language Processing</li>
+                        <li>Convolutional Neural Networks</li>
+                        <li>Recurrent Neural Networks</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Language Models & Advanced AI</h3>
+                    <ul class="skill-list">
+                        <li>Llama.cpp Inference</li>
+                        <li>LoRA Fine-tuning</li>
+                        <li>RAG (Retrieval-Augmented Generation)</li>
+                        <li>Quantization</li>
+                        <li>Edge Inference</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Data Analytics & Statistics</h3>
+                    <ul class="skill-list">
+                        <li>Regression Analysis</li>
+                        <li>Probability Theory</li>
+                        <li>Time Series Analysis</li>
+                        <li>Data Visualization</li>
+                        <li>Hypothesis Testing</li>
+                        <li>Data Augmentation</li>
+                        <li>Missing Value Handling</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Database & Version Control</h3>
+                    <ul class="skill-list">
+                        <li>SQL</li>
+                        <li>MySQL</li>
+                        <li>Git</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Visitor Stats Section -->
+        <div class="visitor-stats">
+            <h4>Global Visitors</h4>
+            <div id="visitor-count">Loading...</div>
+            <div id="visitor-map"></div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const isEditMode = urlParams.get('edit') === 'true';
+
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+        }
+
+        function updateActiveNavLink() {
+            const sections = ['about', 'research', 'publications', 'experience', 'skills'];
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 100 && rect.bottom >= 100) {
+                        current = sectionId;
+                    }
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNavLink);
+
+        function togglePublicationForm() {
+            const form = document.getElementById('publicationForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function addPublication(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('pubTitle').value;
+            const venue = document.getElementById('pubVenue').value;
+            const volume = document.getElementById('pubVolume').value || '';
+            const link = document.getElementById('pubLink').value;
+            const pdfFile = document.getElementById('pubPDF').files[0];
+            
+            const publicationDiv = document.createElement('div');
+            publicationDiv.className = 'research-item';
+            let content = `
+                <h3>${title}</h3>
+                <p><strong>Conference/Journal:</strong> ${venue}</p>
+                ${volume ? `<p><strong>Volume:</strong> ${volume}</p>` : ''}
+                <div class="button-group">
+                    ${link ? `<a href="${link}" target="_blank" class="btn">View Publication</a>` : ''}
+                    ${pdfFile ? `<p><strong>PDF:</strong> ${pdfFile.name} (upload to assets/publications/ and update data/publications.json)</p>` : ''}
+                </div>
+            `;
+            
+            publicationDiv.innerHTML = content;
+            
+            document.getElementById('publicationsList').appendChild(publicationDiv);
+            
+            event.target.reset();
+            togglePublicationForm();
+        }
+
+        async function loadPublications() {
+            try {
+                const response = await fetch('data/publications.json');
+                const publications = await response.json();
+                const publicationsList = document.getElementById('publicationsList');
+                publicationsList.innerHTML = '';
+                publications.forEach(data => {
+                    const div = document.createElement('div');
+                    div.className = 'research-item';
+                    let content = `
+                        <h3>${data.title}</h3>
+                        <p><strong>Conference/Journal:</strong> ${data.conference}</p>
+                        ${data.volume ? `<p><strong>Volume:</strong> ${data.volume}</p>` : ''}
+                        <div class="button-group">
+                            ${data.link ? `<a href="${data.link}" target="_blank" class="btn">View Publication</a>` : ''}
+                            ${data.pdf ? `<a href="${data.pdf}" target="_blank" class="btn">Download PDF</a>` : ''}
+                        </div>
+                        ${data.date ? `<p class="travel-date">Added on: ${data.date}</p>` : ''}
+                    `;
+                    div.innerHTML = content;
+                    publicationsList.appendChild(div);
+                });
+            } catch (error) {
+                console.error('Error loading publications:', error);
+            }
+        }
+
+        document.getElementById('profileImg').addEventListener('click', function() {
+            if (!isEditMode) return;
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profileImg').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        });
+
+        // Visitor Stats and Map with Multiple Pins
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Portfolio website loaded successfully!');
+            
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                setTimeout(() => {
+                    scrollToSection(targetId);
+                }, 100);
+            }
+            
+            const aboutLink = document.querySelector('a[onclick*="about"]');
+            if (aboutLink) {
+                aboutLink.classList.add('active');
+            }
+
+            if (isEditMode) {
+                document.getElementById('pubUploadArea').style.display = 'block';
+            }
+
+            loadPublications();
+
+            // Initialize Visitor Count
+            let visitCount = localStorage.getItem('visitCount') ? parseInt(localStorage.getItem('visitCount')) : 0;
+            visitCount += 1;
+            localStorage.setItem('visitCount', visitCount);
+            document.getElementById('visitor-count').textContent = `Total Visits: ${visitCount}`;
+
+            // Initialize Leaflet Map
+            const map = L.map('visitor-map').setView([20, 0], 2); // Centered on equator, zoom level 2
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Load and Display Previous Visits
+            let visits = JSON.parse(localStorage.getItem('visits') || '[]');
+            visits.forEach(visit => {
+                L.marker([visit.lat, visit.lon]).addTo(map)
+                    .bindPopup(`${visit.city}, ${visit.country}`).openPopup();
+            });
+
+            // Get and Add New Visitor Location
+            fetch('https://ipinfo.io/json?token=YOUR_IPINFO_TOKEN')
+                .then(response => response.json())
+                .then(data => {
+                    const lat = data.loc.split(',')[0];
+                    const lon = data.loc.split(',')[1];
+                    const city = data.city;
+                    const country = data.country;
+                    L.marker([lat, lon]).addTo(map)
+                        .bindPopup(`${city}, ${country} - Visit ${visitCount}`).openPopup();
+                    visits.push({ lat, lon, city, country });
+                    localStorage.setItem('visits', JSON.stringify(visits));
+                    map.setView([lat, lon], 2); // Adjust zoom to show all pins
+                })
+                .catch(error => {
+                    console.error('Error fetching location:', error);
+                    const defaultLat = 33.937856; // Marietta, USA
+                    const defaultLon = -84.519380;
+                    L.marker([defaultLat, defaultLon]).addTo(map)
+                        .bindPopup(`Default: Marietta, USA - Visit ${visitCount}`).openPopup();
+                    visits.push({ lat: defaultLat, lon: defaultLon, city: 'Marietta', country: 'USA' });
+                    localStorage.setItem('visits', JSON.stringify(visits));
+                });
+
+            // Note: Replace 'YOUR_IPINFO_TOKEN' with a valid token from ipinfo.io
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('a[onclick*="scrollToSection"]')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</body>
+</html>

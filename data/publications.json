@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Mobilenet model for classifying local birds of bangladesh from image content using convolutional neural network",
+        "conference": "10th International Conference on Computing, Communication and Networking Technologies (ICCCNT), 2019.",
+        "link": "https://ieeexplore.ieee.org/abstract/document/8944403",
+        "pdf": "assets/publications/mobilenet_bird.pdf"
+    
+    },
+    {
+        "title": "A convolution neural network based classification approach for recognizing traditional foods of bangladesh from food images",
+        "conference": "18th International Conference on Intelligent Systems Design and Applications (ISDA 2018), Vellore, India ",
+        "link": "https://link.springer.com/chapter/10.1007/978-3-030-16657-1_79",
+        "pdf": "assets/publications/traditional_food.pdf"
+    
+    }
+    
+]
