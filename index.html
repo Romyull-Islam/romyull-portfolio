@@ -362,6 +362,15 @@
                 color: #333;
                 cursor: pointer;
                 padding: 0.5rem;
+                /* Enhanced visibility */
+                background-color: #f0f0f0;
+                border-radius: 5px;
+                padding: 0.75rem 1rem;
+                transition: background-color 0.3s;
+            }
+
+            .menu-toggle:hover {
+                background-color: #e0e0e0;
             }
 
             .menu-toggle.active .bar {
@@ -424,9 +433,7 @@
         <div class="container">
             <div class="logo">Md Romyull Islam</div>
             <button class="menu-toggle" onclick="toggleMenu()">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <i class="fas fa-bars"></i> <!-- Added Font Awesome hamburger icon -->
             </button>
             <ul class="nav-menu">
                 <li><a href="#about" onclick="scrollToSection('about')" class="nav-link active">About</a></li>
