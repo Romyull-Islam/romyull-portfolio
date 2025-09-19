@@ -1,5 +1,70 @@
 [
     {
+        "title": "A Sparsity Predicting Approach for Large Language Models via Activation Pattern Clustering",
+        "conference": "31st International European Conference on Parallel and Distributed Computing (Euro-Par),2025",
+        "link": "https://link.springer.com/chapter/10.1007/978-3-031-99854-6_25",
+        "pdf": "assets/publications/europar.pdf"
+    
+    },
+
+    {
+        "title": "Characterizing and Understanding the Performance of Small Language Models on Edge Devices",
+        "conference": "2024 IEEE International Performance, Computing, and Communications Conference (IPCCC)",
+        "link": "https://ieeexplore.ieee.org/abstract/document/10850044",
+        "pdf": "assets/publications/Characterizing_and_Understanding.pdf"
+    
+    },
+
+    {
+        "title": "Activation Sparsity Opportunities for Compressing General Large Language Models",
+        "conference": "2024 IEEE International Performance, Computing, and Communications Conference (IPCCC)",
+        "link": "https://ieeexplore.ieee.org/abstract/document/10850382",
+        "pdf": "assets/publications/Activation_Sparsity_Opportunities.pdf"
+    
+    },
+
+    {
+        "title": "Building a Resilient and Sustainable Grid: A Study of Challenges and Opportunities in AI for Smart Virtual Power Plants",
+        "conference": "ACMSE '24: Proceedings of the 2024 ACM Southeast Conference",
+        "link": "https://dl.acm.org/doi/abs/10.1145/3603287.3651202",
+        "pdf": "assets/publications/building.pdf"
+    
+    },
+    
+    {
+        "title": "A Systematic Investigation of Hardware and Software in Electric Vehicular Platform",
+        "conference": "ACMSE '24: Proceedings of the 2024 ACM Southeast Conference",
+        "link": "https://dl.acm.org/doi/abs/10.1145/3603287.3651203",
+        "pdf": "assets/publications/A_Systematic_Investigation.pdf"
+    
+    },
+    
+    {
+        "title": "Living on the Electric Vehicle and Cloud Era: A Study of Cyber Vulnerabilities, Potential Impacts, and Possible Strategies",
+        "conference": "ACMSE '24: Proceedings of the 2024 ACM Southeast Conference",
+        "link": "https://dl.acm.org/doi/abs/10.1145/3603287.3651209",
+        "pdf": "assets/publications/living.pdf"
+    
+    },
+
+    {
+        "title": "Machine Learning Techniques Applied to Predict Tropospheric Ozone in a Semi-Arid Climate Region",
+        "conference": "Mathematics, MDPI",
+        "link": "https://www.mdpi.com/2227-7390/9/22/2901",
+        "pdf": "assets/publications/mathematics.pdf"
+    
+    },
+
+    {
+        "title": "Volatility estimation for COVID-19 daily rates using Kalman filtering technique",
+        "conference": "Results in Physics, Elsevier",
+        "link": "https://www.sciencedirect.com/science/article/pii/S2211379721004241",
+        "pdf": "assets/publications/volatility.pdf"
+    
+    },
+
+
+    {
         "title": "Mobilenet model for classifying local birds of bangladesh from image content using convolutional neural network",
         "conference": "10th International Conference on Computing, Communication and Networking Technologies (ICCCNT), 2019.",
         "link": "https://ieeexplore.ieee.org/abstract/document/8944403",
